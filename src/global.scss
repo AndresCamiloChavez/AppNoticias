@@ -34,3 +34,18 @@
     font-size: 14px;
     color: rgba(112, 126, 231, 0.726);
 }
+.myPage {
+    .myActionSheetBtnStyle-favorite{
+        ion-icon {
+            color: #b41933;
+        }
+        background-color: rgb(180, 75, 75) !important;
+    }
+    .myActionSheetBtnStyle-Compartir{
+        ion-icon {
+            color: #143cec;
+        }
+        background-color: rgb(75, 103, 180) !important;
+        
+    }
+  }
