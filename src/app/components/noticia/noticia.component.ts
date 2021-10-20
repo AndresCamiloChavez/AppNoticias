@@ -1,8 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Article } from '../../interfaces/interfaces';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, ToastController } from '@ionic/angular';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { DataLocalService } from '../../services/data-local.service';
 
 
 
@@ -15,12 +16,18 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 export class NoticiaComponent implements OnInit {
   @Input() noticia: Article;
   @Input() indice: number;
-  constructor(private iab: InAppBrowser, private actionCtrl: ActionSheetController,
-              private socialsharing: SocialSharing) {
+  @Input() enFavoritos;
+
+  constructor(private iab: InAppBrowser,
+              private actionCtrl: ActionSheetController,
+              private socialsharing: SocialSharing,
+              private dataLocalStorage: DataLocalService,
+              private toastCtrl: ToastController) {
     // console.log('es null noticiia', this.noticia === undefined);
    }
 
   ngOnInit() {
+    // console.log('enFavoritos', this.enFavoritos);
   }
   abrirNoticia(){
     console.log('click noticia');
@@ -31,13 +38,21 @@ export class NoticiaComponent implements OnInit {
       header: 'Opciones',
       cssClass: 'myPage',
       buttons: [{
-        text: 'Favorito',
-        icon: 'heart',
+        text: this.enFavoritos ? 'Quitar Favorito': 'Favorito',
+        icon: this.enFavoritos ? 'trash': 'heart',
         cssClass: 'myActionSheetBtnStyle-favorite',
         handler: () => {
-          console.log('favorite clicked');
-        }
-      }, {
+          if(this.enFavoritos){
+            this.dataLocalStorage.borrarNoticia(this.noticia);
+            this.mostrarToast('Se ha eliminado de favoritos');
+          }
+          else {
+            this.dataLocalStorage.guardarNoticia(this.noticia);
+            this.mostrarToast('Se ha agregado a favoritos');
+          }
+         }
+       },
+       {
         text: 'Compartir',
         icon: 'share',
         cssClass: 'myActionSheetBtnStyle-Compartir',
@@ -59,6 +74,15 @@ export class NoticiaComponent implements OnInit {
       }]
     });
     await actionSheet.present();
+  }
+
+  async mostrarToast(mensaje: string){
+    const toast = await this.toastCtrl.create({
+      message: mensaje,
+      duration: 2000,
+      position: 'top'
+    });
+    toast.present();
   }
 
 }

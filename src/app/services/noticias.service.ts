@@ -32,7 +32,7 @@ export class NoticiasService {
     this.headlinesPage++;
     return this.http.get<RespuestaTopHeadlines>(
         // eslint-disable-next-line max-len
-        'https://newsapi.org/v2/top-headlines?country=us&page='+this.headlinesPage+'&category=business&apiKey=645e775aed974ec598b27b18caf360d0');
+        'https://newsapi.org/v2/top-headlines?country=co&page='+this.headlinesPage+'&category=business&apiKey=645e775aed974ec598b27b18caf360d0');
       // eslint-disable-next-line no-underscore-dangle
       // return this.ejecutarQuery<RespuestaTopHeadlines>('/top-headlines?country=co').pipe(
       //   delay( 3500 )
