@@ -1,17 +1,80 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" class="ion-no-border">
   <ion-toolbar>
-    <ion-title>
-      Tab 2
-    </ion-title>
+    <ion-title> Encabezados </ion-title>
+    <ion-segment
+      scrollable
+      mode="md"
+      color="primary"
+      [value]="categorias[0]"
+      (ionChange)="segmentChanged($event)"
+    >
+      <ion-segment-button
+        mode="md"
+        *ngFor="let categoria of categorias"
+        [value]="categoria"
+      >
+        <ion-label text-capitalize>{{categoria}}</ion-label>
+      </ion-segment-button>
+    </ion-segment>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <app-noticias [noticias]="noticiasCategoria"></app-noticias>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+  <ion-infinite-scroll threshold="20px" position="bottom" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Cargando Noticias...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+<!--   
+<ion-card *ngIf="!noticiasCategoria">
+  <ion-card-header>
+      <ion-card-subtitle>
+        <ion-skeleton-text animated style="width: 10%"></ion-skeleton-text>
+      </ion-card-subtitle>
+      <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 90%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 76%"></ion-skeleton-text>
+    </ion-card-header>
+    <p>
+      <ion-skeleton-text
+      slot="end"
+      class="ion-text-center"
+      style="width: 100%; height: 200px"
+      ></ion-skeleton-text>
+    </p>
+    <ion-card-content>
+      <ion-skeleton-text
+      slot="end"
+        class="ion-text-center"
+        animated
+        style="width: 100%"
+        ></ion-skeleton-text>
+        <ion-skeleton-text
+        slot="end"
+        class="ion-text-center"
+        animated
+        style="width: 99%"
+        ></ion-skeleton-text>
+        <ion-skeleton-text
+        slot="end"
+        class="ion-text-center"
+        animated
+        style="width: 97%"
+        ></ion-skeleton-text>
+        <ion-skeleton-text
+        slot="end"
+        class="ion-text-center"
+        animated
+        style="width: 90%"
+        ></ion-skeleton-text>
+        <ion-skeleton-text
+        slot="end"
+        class="ion-text-center"
+        animated
+        style="width: 75%"
+        ></ion-skeleton-text>
+      </ion-card-content>
+    </ion-card> -->
+
 </ion-content>
